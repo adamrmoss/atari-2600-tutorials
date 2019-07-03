@@ -1,0 +1,30 @@
+{
+  "name": "atari-2600-tutorials",
+  "version": "0.0.1",
+  "description": "Tutorials to learn Atari 2600 hardware, 6502 assembler, and cc65 toolchain",
+  "author": "Adam R Moss",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/adamrmoss/atari-2600-tutorials/issues"
+  },
+  "homepage": "https://github.com/adamrmoss/atari-2600-tutorials#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamrmoss/atari-2600-tutorials.git"
+  },
+  "keywords": [
+    "atari",
+    "2600",
+    "vcs",
+    "6502",
+    "tutorial"
+  ],
+  "devDependencies": {
+    "ansi-escape-sequences": "^4.1.0",
+    "command-line-args": "^5.1.1",
+    "command-line-usage": "^4.1.0"
+  },
+  "scripts": {
+    "build": "node build.js"
+  }
+}
