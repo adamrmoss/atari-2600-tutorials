@@ -60,7 +60,7 @@ const usageSections =
         },
         {
             header: 'atari-2600-tutorials/build.js',
-            content: 'Compile [bold]{Atari 2600} games using [bold]{cc65}'
+            content: 'Compile [bold]{Atari 2600} games using [bold]{dasm}'
         },
         {
             header: 'Synopsis',
@@ -103,15 +103,15 @@ function buildRom(options)
 {
     const inputFilePath       = `${options.src}/${options.name}.asm`;
     const listFilePath        = `out/${options.name}.lst`;
-    const mapFilePath         = `out/${options.name}.map`;
+    const symbolFilePath      = `out/${options.name}.sym`;
     const buildOutputFilePath = `out/${options.name}.bin`;
 
-    buildBinary(inputFilePath, listFilePath, mapFilePath, buildOutputFilePath);
+    buildBinary(inputFilePath, listFilePath, symbolFilePath, buildOutputFilePath);
 }
 
-function buildBinary(inputFilePath, listFilePath, mapFilePath, buildOutputFilePath)
+function buildBinary(inputFilePath, listFilePath, symbolFilePath, buildOutputFilePath)
 {
-    shell(`cl65 -C atari2600.cfg -l ${listFilePath} -m ${mapFilePath} -o ${buildOutputFilePath} ${inputFilePath}`);
+    shell(`dasm ${inputFilePath} -f3 -v0 -T1 -l${listFilePath} -s${symbolFilePath} -o${buildOutputFilePath}`);
 }
 
 function copyOutputToRomsDirectory(name, romPath)
