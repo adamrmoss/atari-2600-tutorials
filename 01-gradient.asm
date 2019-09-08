@@ -6,6 +6,7 @@ VBLANK = $01
 WSYNC  = $02
 COLUBK = $09
 
+    ; Scanline count constants
 TOTAL_LINE_COUNT    = 262
 VBLANK_LINE_COUNT   =  37
 PICTURE_LINE_COUNT  = 210
@@ -21,20 +22,19 @@ Start:
 
     repeat VBLANK_LINE_COUNT
         sta WSYNC
-        dex
     repend
 
     ; Turn off VBLANK
     lda #$00
     sta VBLANK
 
-    ; Draw Visible Picture, storing the current color in Y
-    ldy #0
+    ; Draw Visible Picture, using compile-time constant
+BACKGROUND_COLOR set 0
     repeat PICTURE_LINE_COUNT
-        dey
-        dey
-        sty COLUBK
-        sty WSYNC
+BACKGROUND_COLOR set BACKGROUND_COLOR - 2
+        lda #BACKGROUND_COLOR
+        sta COLUBK
+        sta WSYNC
     repend
 
     ; Enable VBLANK
