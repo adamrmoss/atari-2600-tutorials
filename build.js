@@ -1,6 +1,7 @@
 const getCommandLineOptions = require('command-line-args');
 const getCommandLineUsage = require('command-line-usage');
 const exec = require('child_process').execSync;
+const exit = require('exit');
 const ansi = require('ansi-escape-sequences');
 
 const logo =
@@ -121,5 +122,9 @@ function copyOutputToRomsDirectory(name, romPath)
 
 function shell(command)
 {
-    exec(command, { stdio: [0, 1, 2] })
+    try {
+        exec(command, { stdio: 'inherit' });
+    } catch {
+        exit();
+    }
 }

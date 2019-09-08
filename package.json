@@ -22,7 +22,8 @@
   "devDependencies": {
     "ansi-escape-sequences": "^4.1.0",
     "command-line-args": "^5.1.1",
-    "command-line-usage": "^4.1.0"
+    "command-line-usage": "^4.1.0",
+    "exit": "^0.1.2"
   },
   "scripts": {
     "build": "node build.js"
