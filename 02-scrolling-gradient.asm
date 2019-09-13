@@ -6,6 +6,13 @@ VBLANK = $01
 WSYNC  = $02
 COLUBK = $09
 
+AUDC0  = $15
+AUDC1  = $16
+AUDF0  = $17
+AUDF1  = $18
+AUDV0  = $19
+AUDV1  = $1a
+
     ; Scanline count constants
 VBLANK_LINE_COUNT   =  37
 PICTURE_LINE_COUNT  = 192
@@ -22,7 +29,23 @@ ACTUAL_LINE_COUNT   = VBLANK_LINE_COUNT + PICTURE_LINE_COUNT + OVERSCAN_LINE_COU
     org $f800
 
 Start:
-    ; Initialization
+    ; Both voices sing square waves
+    lda $04
+    sta AUDC0
+    sta AUDC1
+
+    ; Loud bass note on sharp side of C-5
+    lda #$1f
+    sta AUDF0
+    lda $08
+    sta AUDV0
+
+    ; Quieter note on sharp side of G-5
+    lda #$13
+    sta AUDF1
+    lda $04
+    sta AUDV1
+
 StartFrame:
     ; Enable VBLANK
     lda #$02
@@ -33,16 +56,16 @@ StartFrame:
     repend
 
     ; Turn off VBLANK
-    ldx #$00
-    stx VBLANK
+    lda #$00
+    sta VBLANK
 
     ; Draw Visible Picture, using compile-time constant
 BACKGROUND_COLOR set 0
     repeat PICTURE_LINE_COUNT
 BACKGROUND_COLOR set BACKGROUND_COLOR - 2
-        ldy #BACKGROUND_COLOR
-        sty COLUBK
-        sty WSYNC
+        lda #BACKGROUND_COLOR
+        sta COLUBK
+        sta WSYNC
     repend
 
     ; Enable VBLANK
@@ -55,16 +78,16 @@ BACKGROUND_COLOR set BACKGROUND_COLOR - 2
     repend
 
     ; Turn off VBLANK
-    ldx #$00
-    stx VBLANK
+    lda #$00
+    sta VBLANK
 
     ; Turn on VSYNC
-    ldy #$02
-    sty VSYNC
+    lda #$02
+    sta VSYNC
 
     ; VSYNC lines
     repeat VSYNC_LINE_COUNT
-        sty WSYNC
+        sta WSYNC
     repend
 
     ; Turn off VSYNC
