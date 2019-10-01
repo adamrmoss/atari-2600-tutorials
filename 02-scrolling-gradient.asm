@@ -27,20 +27,21 @@ INITIAL_STARTING_COLOR = $0a
     org $f800
 Start:
     CLEAN_START
+
     lda #INITIAL_STARTING_COLOR
     sta StartingColor
     sta COLUBK
 
-StartFrame:
-    ; Decrement StartingColor
-    ldy StartingColor
-    dey
-    dey
-    sty StartingColor
-
     ; Enable VBLANK
     lda #$02
     sta VBLANK
+
+StartFrame:
+    ; Increment StartingColor
+    ldy StartingColor
+    iny
+    iny
+    sty StartingColor
 
     ; Output VBlank
     ldx #VBLANK_LINE_COUNT
@@ -76,22 +77,7 @@ OverscanLoop:
     dex
     bne OverscanLoop
 
-    ; Turn off VBLANK
-    lda #$00
-    sta VBLANK
-
-    ; Turn on VSYNC
-    lda #$02
-    sta VSYNC
-
-    ; VSYNC lines
-    repeat VSYNC_LINE_COUNT
-        sta WSYNC
-    repend
-
-    ; Turn off VSYNC
-    lda #$00
-    sta VSYNC
+    VERTICAL_SYNC
 
     ; Start over for the next Frame
     jmp StartFrame
