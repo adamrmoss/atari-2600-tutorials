@@ -80,6 +80,10 @@ if (options.help || !options.name)
     showHelp();
 } else
 {
+    if (options.name.endsWith('.asm'))
+    {
+        options.name = options.name.replace('.asm', '');
+    }
     ensureOutputDirectory();
     buildRom(options);
 
