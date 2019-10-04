@@ -56,15 +56,26 @@ VBlankLoop:
 
     ldy StartingColor
 
-    ; Draw Visible Picture
-    ldx #PICTURE_LINE_COUNT
-VisibleLineLoop:
+    ; Draw Top Half of Visible Picture
+    ldx #PICTURE_LINE_COUNT / 2
+TopLineLoop:
+    sty COLUBK
+    sty WSYNC
+    iny
+    iny
+    dex
+    bne TopLineLoop
+    sta WSYNC
+
+    ; Draw Bottom Half of Visible Picture
+    ldx #PICTURE_LINE_COUNT / 2
+BottomLineLoop:
     sty COLUBK
     sty WSYNC
     dey
     dey
     dex
-    bne VisibleLineLoop
+    bne BottomLineLoop
     sta WSYNC
 
     ; Enable VBLANK
