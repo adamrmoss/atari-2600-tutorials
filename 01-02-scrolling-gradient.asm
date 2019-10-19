@@ -13,8 +13,7 @@ TOTAL_LINE_COUNT    = 262
 ACTUAL_LINE_COUNT   = VBLANK_LINE_COUNT + PICTURE_LINE_COUNT + OVERSCAN_LINE_COUNT + VSYNC_LINE_COUNT
 
     if TOTAL_LINE_COUNT != ACTUAL_LINE_COUNT
-        throw "Error: ACTUAL_LINE_COUNT is ", [ACTUAL_LINE_COUNT]d, "; should be ", [TOTAL_LINE_COUNT]d
-        err
+        THROW "Error: ACTUAL_LINE_COUNT is ", [ACTUAL_LINE_COUNT]d, "; should be ", [TOTAL_LINE_COUNT]d
     endif
 
     seg.u RAM
@@ -26,8 +25,6 @@ INITIAL_STARTING_COLOR = $0a
     seg ROM
     org $f800
 Start:
-    CLEAN_START
-
     lda #INITIAL_STARTING_COLOR
     sta StartingColor
     sta COLUBK
@@ -56,26 +53,15 @@ VBlankLoop:
 
     ldy StartingColor
 
-    ; Draw Top Half of Visible Picture
-    ldx #PICTURE_LINE_COUNT / 2
-TopLineLoop:
-    sty COLUBK
-    sty WSYNC
-    iny
-    iny
-    dex
-    bne TopLineLoop
-    sta WSYNC
-
-    ; Draw Bottom Half of Visible Picture
-    ldx #PICTURE_LINE_COUNT / 2
-BottomLineLoop:
+    ; Draw Visible Picture
+    ldx #PICTURE_LINE_COUNT
+VisibleLineLoop:
     sty COLUBK
     sty WSYNC
     dey
     dey
     dex
-    bne BottomLineLoop
+    bne VisibleLineLoop
     sta WSYNC
 
     ; Enable VBLANK

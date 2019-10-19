@@ -5,9 +5,9 @@
     include "lib/RIOT.asm"
 
     ; Scanline count constants
-VBLANK_LINE_COUNT   =  37
-PICTURE_LINE_COUNT  = 192
-OVERSCAN_LINE_COUNT =  30
+VBLANK_LINE_COUNT   =  27
+PICTURE_LINE_COUNT  = 208
+OVERSCAN_LINE_COUNT =  24
 VSYNC_LINE_COUNT    =   3
 TOTAL_LINE_COUNT    = 262
 ACTUAL_LINE_COUNT   = VBLANK_LINE_COUNT + PICTURE_LINE_COUNT + OVERSCAN_LINE_COUNT + VSYNC_LINE_COUNT
@@ -56,15 +56,25 @@ VBlankLoop:
 
     ldy StartingColor
 
-    ; Draw Visible Picture
-    ldx #PICTURE_LINE_COUNT
-VisibleLineLoop:
+    ; Draw Top Half of Visible Picture
+    ldx #PICTURE_LINE_COUNT / 2 - 1
+TopLineLoop:
+    sty COLUBK
+    sty WSYNC
+    iny
+    iny
+    dex
+    bne TopLineLoop
+
+    ; Draw Bottom Half of Visible Picture
+    ldx #PICTURE_LINE_COUNT / 2 - 1
+BottomLineLoop:
     sty COLUBK
     sty WSYNC
     dey
     dey
     dex
-    bne VisibleLineLoop
+    bne BottomLineLoop
     sta WSYNC
 
     ; Enable VBLANK

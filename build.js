@@ -116,7 +116,7 @@ function buildRom(options)
 
 function buildBinary(inputFilePath, listFilePath, symbolFilePath, buildOutputFilePath)
 {
-    shell(`dasm ${inputFilePath} -f3 -v0 -T1 -l${listFilePath} -s${symbolFilePath} -o${buildOutputFilePath}`);
+    shell(`dasm ${inputFilePath} -f3 -v1 -T1 -l${listFilePath} -s${symbolFilePath} -o${buildOutputFilePath}`);
 }
 
 function copyOutputToRomsDirectory(name, romPath)
