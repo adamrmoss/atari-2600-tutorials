@@ -8,16 +8,16 @@ OVERSCAN_LINE_COUNT =  24
 
     ; Variables
     seg.u RAM
-    org $80
 StartingColor: byte
+
+    ; Constants
+INITIAL_STARTING_COLOR = $0a
 
     ; Program
     seg ROM
-    org $f800
 Start:
     CLEAN_START
 
-INITIAL_STARTING_COLOR = $0a
     lda #INITIAL_STARTING_COLOR
     sta StartingColor
     sta COLUBK
