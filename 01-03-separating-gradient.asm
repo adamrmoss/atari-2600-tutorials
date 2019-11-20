@@ -1,33 +1,23 @@
-    processor 6502
-
-    include "lib/Macros.asm"
-    include "lib/TIA.asm"
-    include "lib/RIOT.asm"
+    include "lib/2K.asm"
 
     ; Scanline count constants
 VBLANK_LINE_COUNT   =  27
 PICTURE_LINE_COUNT  = 208
 OVERSCAN_LINE_COUNT =  24
-VSYNC_LINE_COUNT    =   3
-TOTAL_LINE_COUNT    = 262
-ACTUAL_LINE_COUNT   = VBLANK_LINE_COUNT + PICTURE_LINE_COUNT + OVERSCAN_LINE_COUNT + VSYNC_LINE_COUNT
+    include "lib/scanlines.asm"
 
-    if TOTAL_LINE_COUNT != ACTUAL_LINE_COUNT
-        throw "Error: ACTUAL_LINE_COUNT is ", [ACTUAL_LINE_COUNT]d, "; should be ", [TOTAL_LINE_COUNT]d
-        err
-    endif
-
+    ; Variables
     seg.u RAM
     org $80
 StartingColor: byte
 
-INITIAL_STARTING_COLOR = $0a
-
+    ; Program
     seg ROM
     org $f800
 Start:
     CLEAN_START
 
+INITIAL_STARTING_COLOR = $0a
     lda #INITIAL_STARTING_COLOR
     sta StartingColor
     sta COLUBK

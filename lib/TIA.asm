@@ -29,10 +29,10 @@ TIA_BASE_WRITE_ADDRESS = TIA_BASE_ADDRESS ; ║        not defined, they default
 
 ; ╔═════════════════════════════════════════════════════════════════════════════════════╗
 ; ║ TIA MEMORY MAP                                                                      ║
-; ╚══════════════════════════════╦══════════════════════════════════════════════════════╣
-    seg.u TIA_REGISTERS_WRITE  ; ║ Segment for TIA Writes, shares address space with    ║
-    org TIA_BASE_WRITE_ADDRESS ; ║ the segment for TIA Reads.                           ║
-                    ; ╔═════╦════╩══════╦═══════════════════════════════════════════════╣
+; ╚═══════════════════════════════╦═════════════════════════════════════════════════════╣
+    seg.u TIA_REGISTERS_WRITE   ; ║ Segment for TIA Writes, shares address space with   ║
+    rorg TIA_BASE_WRITE_ADDRESS ; ║ the segment for TIA Reads.                          ║
+                    ; ╔═════╦═════╩═════╦═══════════════════════════════════════════════╣
 VSYNC       byte    ; ║ $00 ║ 0000 00x0 ║ Vertical Sync Set-Clear                       ║
 VBLANK      byte    ; ║ $01 ║ xx00 00x0 ║ Vertical Blank Set-Clear                      ║
 WSYNC       byte    ; ║ $02 ║ ---- ---- ║ Wait for Horizontal Blank                     ║
@@ -78,10 +78,10 @@ RESMP1      byte    ; ║ $29 ║ 0000 00x0 ║ Reset Missle 1 to Player 1      
 HMOVE       byte    ; ║ $2a ║ ---- ---- ║ Apply Horizontal Motion                       ║
 HMCLR       byte    ; ║ $2b ║ ---- ---- ║ Clear Horizontal Move Registers               ║
 CXCLR       byte    ; ║ $2c ║ ---- ---- ║ Clear Collision Latches                       ║
-                    ; ╚═════╩═══╦═══════╩═══════════════════════════════════════════════╣
-    seg.u TIA_REGISTERS_READ  ; ║ Segment for TIA Writes, shares address space with     ║
-    org TIA_BASE_READ_ADDRESS ; ║ the segment for TIA Reads. ╔════════╦═════════════════╣
-                              ; ╚════════════════════════════╝        ║  bit 7   bit 6  ║
+                    ; ╚═════╩════╦══════╩═══════════════════════════════════════════════╣
+    seg.u TIA_REGISTERS_READ   ; ║ Segment for TIA Writes, shares address space with    ║
+    rorg TIA_BASE_READ_ADDRESS ; ║ the segment for TIA Reads. ╔═══════╦═════════════════╣
+                               ; ╚════════════════════════════╝       ║  bit 7   bit 6  ║
                     ; ╔═════╦═══════════╦═════════════════════════════╬═════════════════╣
 CXM0P       byte    ; ║ $00 ║ xx00 0000 ║ Read Collision              ║  M0-P1   M0-P0  ║
 CXM1P       byte    ; ║ $01 ║ xx00 0000 ║ Read Collision              ║  M1-P0   M1-P1  ║
