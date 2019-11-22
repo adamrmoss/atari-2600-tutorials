@@ -8,7 +8,7 @@ OVERSCAN_LINE_COUNT =  24
 
     ; Variables
     seg.u RAM
-StartingColor: byte
+ColorPhase: word
 
     ; Constants
 INITIAL_STARTING_COLOR = $01
@@ -19,7 +19,7 @@ Start:
     CLEAN_START
 
     lda #INITIAL_STARTING_COLOR
-    sta StartingColor
+    sta ColorPhase
     sta COLUBK
 
     ; Enable VBLANK
@@ -27,11 +27,9 @@ Start:
     sta VBLANK
 
 StartFrame:
-    ; Increment StartingColor
-    ldy StartingColor
-    iny
-    iny
-    sty StartingColor
+    ; Increment ColorPhase twice
+    inc ColorPhase
+    inc ColorPhase
 
     ; Output VBlank
     ldx #VBLANK_LINE_COUNT
@@ -44,7 +42,7 @@ VBlankLoop:
     lda #$00
     sta VBLANK
 
-    ldy StartingColor
+    ldy ColorPhase
 
     ; Draw Top Half of Visible Picture
     ldx #PICTURE_LINE_COUNT / 2 - 1
