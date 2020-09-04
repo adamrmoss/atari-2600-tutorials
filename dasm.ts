@@ -10,7 +10,8 @@ export function buildRom({ srcPath, name }: { srcPath: string; name: string; })
     buildBinary({ inputFilePath, listFilePath, symbolFilePath, buildOutputFilePath });
 }
 
-export type BuildBinaryParams = {
+export type BuildBinaryParams =
+{
     inputFilePath: string,
     listFilePath: string,
     symbolFilePath: string,
