@@ -20,12 +20,18 @@
     "tutorial"
   ],
   "devDependencies": {
+    "@types/ansi-escape-sequences": "^4.0.0",
+    "@types/command-line-args": "^5.0.0",
+    "@types/command-line-usage": "^5.0.1",
+    "@types/exit": "^0.1.31",
     "ansi-escape-sequences": "^4.1.0",
     "command-line-args": "^5.1.1",
     "command-line-usage": "^4.1.0",
-    "exit": "^0.1.2"
+    "exit": "^0.1.2",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
   },
   "scripts": {
-    "build": "node build.js"
+    "build": "npx ts-node build.ts"
   }
 }

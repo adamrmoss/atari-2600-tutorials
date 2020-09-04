@@ -1,8 +1,8 @@
-const getCommandLineOptions = require('command-line-args');
-const getCommandLineUsage = require('command-line-usage');
-const exec = require('child_process').execSync;
-const exit = require('exit');
-const ansi = require('ansi-escape-sequences');
+import getCommandLineOptions, { CommandLineOptions } from 'command-line-args';
+import  getCommandLineUsage from 'command-line-usage';
+import { execSync } from 'child_process';
+import exit from 'exit';
+import ansi from 'ansi-escape-sequences';
 
 const logo =
     '              ██ █████ ██\n' +
@@ -104,7 +104,7 @@ function ensureOutputDirectory()
     shell('mkdir -p out');
 }
 
-function buildRom(options)
+function buildRom(options: CommandLineOptions)
 {
     const inputFilePath       = `${options.src}/${options.name}.asm`;
     const listFilePath        = `out/${options.name}.lst`;
@@ -114,21 +114,21 @@ function buildRom(options)
     buildBinary(inputFilePath, listFilePath, symbolFilePath, buildOutputFilePath);
 }
 
-function buildBinary(inputFilePath, listFilePath, symbolFilePath, buildOutputFilePath)
+function buildBinary(inputFilePath: string, listFilePath: string, symbolFilePath: string, buildOutputFilePath: string)
 {
     shell(`dasm ${inputFilePath} -f3 -v1 -T1 -l${listFilePath} -s${symbolFilePath} -o${buildOutputFilePath}`);
 }
 
-function copyOutputToRomsDirectory(name, romPath)
+function copyOutputToRomsDirectory(name: string, romPath: string)
 {
     shell(`cp 'out/${name}.'* '${romPath}/'`);
 }
 
-function shell(command)
+function shell(command: string)
 {
     try {
-        exec(command, { stdio: 'inherit' });
+        execSync(command, { stdio: 'inherit' });
     } catch {
-        exit();
+        exit(1);
     }
 }
