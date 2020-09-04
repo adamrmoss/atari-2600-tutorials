@@ -1,8 +1,9 @@
 import getCommandLineOptions, { CommandLineOptions } from 'command-line-args';
-import  getCommandLineUsage from 'command-line-usage';
-import { execSync } from 'child_process';
-import exit from 'exit';
+import getCommandLineUsage from 'command-line-usage';
 import ansi from 'ansi-escape-sequences';
+
+import shell from './shell';
+import { buildRom } from './dasm';
 
 const logo =
     '              ██ █████ ██\n' +
@@ -27,6 +28,13 @@ const logo =
 
 const ansiLogo = ansi.format(logo, ['red', 'bold']);
 
+interface IOptions {
+    help: boolean;
+    srcPath: string;
+    romPath: string;
+    name: string;
+}
+
 const optionsDefinitions =
     [
         {
@@ -35,13 +43,13 @@ const optionsDefinitions =
             type: Boolean
         },
         {
-            name: 'src', alias: 's',
+            name: 'srcPath', alias: 's',
             description: '[bold italic]{Optional} Assembly source directory, defaults to this directory',
             type: String,
             defaultValue: '.'
         },
         {
-            name: 'roms', alias: 'r',
+            name: 'romPath', alias: 'r',
             description: '[bold italic]{Optional} Roms directory to copy binary output to',
             type: String
         },
@@ -73,7 +81,7 @@ const usageSections =
         }
     ];
 
-const options = getCommandLineOptions(optionsDefinitions);
+const options = getCommandLineOptions(optionsDefinitions) as IOptions;
 
 if (options.help || !options.name)
 {
@@ -87,9 +95,9 @@ if (options.help || !options.name)
     ensureOutputDirectory();
     buildRom(options);
 
-    if (options.roms)
+    if (options.romPath)
     {
-        copyOutputToRomsDirectory(options.name, options.roms);
+        copyOutputToRomsDirectory(options);
     }
 }
 
@@ -104,31 +112,7 @@ function ensureOutputDirectory()
     shell('mkdir -p out');
 }
 
-function buildRom(options: CommandLineOptions)
-{
-    const inputFilePath       = `${options.src}/${options.name}.asm`;
-    const listFilePath        = `out/${options.name}.lst`;
-    const symbolFilePath      = `out/${options.name}.sym`;
-    const buildOutputFilePath = `out/${options.name}.bin`;
-
-    buildBinary(inputFilePath, listFilePath, symbolFilePath, buildOutputFilePath);
-}
-
-function buildBinary(inputFilePath: string, listFilePath: string, symbolFilePath: string, buildOutputFilePath: string)
-{
-    shell(`dasm ${inputFilePath} -f3 -v1 -T1 -l${listFilePath} -s${symbolFilePath} -o${buildOutputFilePath}`);
-}
-
-function copyOutputToRomsDirectory(name: string, romPath: string)
+function copyOutputToRomsDirectory({ name, romPath }: { name: string, romPath: string })
 {
     shell(`cp 'out/${name}.'* '${romPath}/'`);
-}
-
-function shell(command: string)
-{
-    try {
-        execSync(command, { stdio: 'inherit' });
-    } catch {
-        exit(1);
-    }
 }
