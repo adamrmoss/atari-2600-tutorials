@@ -3,18 +3,34 @@ import commandLineArgs from 'command-line-args';
 import commandLineUsage from 'command-line-usage';
 
 import { ansiLogo } from './logo';
+import { srcPath } from './paths';
 
 export interface ICommandLineOptions 
 {
     help: boolean;
-    srcPath: string;
-    romPath: string;
+    verbose: boolean;
     name: string;
+    run: boolean;
 }
 
 export function getCommandLineOptions()
 {
-    return commandLineArgs(optionsDefinitions) as ICommandLineOptions;
+    const commandLineOptions = (commandLineArgs(optionsDefinitions) as ICommandLineOptions);
+    normalizeName(commandLineOptions);
+
+    return commandLineOptions;
+}
+
+function normalizeName(commandLineOptions: ICommandLineOptions)
+{
+    if (!commandLineOptions.name)
+    {
+        return;
+    }
+
+    commandLineOptions.name = commandLineOptions.name
+        .replace(srcPath, '')
+        .replace('.asm', '');
 }
 
 export function getCommandLineUsage()
@@ -25,26 +41,31 @@ export function getCommandLineUsage()
 const optionsDefinitions =
     [
         {
-            name: 'help', alias: 'h',
-            description: 'Display this usage guide',
-            type: Boolean
+            name: 'help',
+            alias: 'h',
+            description: 'Display this usage guide?',
+            type: Boolean,
+            default: false
         },
         {
-            name: 'srcPath', alias: 's',
-            description: '[bold italic]{Optional} Assembly source directory, defaults to this directory',
-            type: String,
-            defaultValue: '.'
-        },
-        {
-            name: 'romPath', alias: 'r',
-            description: '[bold italic]{Optional} Roms directory to copy binary output to',
-            type: String
+            name: 'verbose',
+            alias: 'v',
+            description: 'Show verbose build?',
+            type: Boolean,
+            default: false
         },
         {
             name: 'name',
             description: '[bold italic]{Required} The name portion of both the assembly source and binary output',
             type: String,
             defaultOption: true
+        },
+        {
+            name: 'run',
+            alias: 'r',
+            description: 'Run game in Stella after building?',
+            type: Boolean,
+            default: false
         }
     ];
 
@@ -67,3 +88,9 @@ const usageSections =
             optionList: optionsDefinitions
         }
     ];
+
+export function showHelp()
+{
+    const usage = getCommandLineUsage();
+    console.log(usage);
+}

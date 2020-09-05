@@ -1,45 +1,19 @@
-import { getCommandLineOptions, getCommandLineUsage } from './command-line-options';
-import shell from './shell';
-import { buildRom } from './dasm';
+import { getCommandLineOptions, showHelp } from './command-line-options';
+import { ensureOutputDirectory, buildRom, runRom } from './dasm';
 
 const options = getCommandLineOptions();
-let { help, romPath, name } = options;
+let { help, name, run } = options;
 
 if (help || !name)
 {
     showHelp();
 } else
 {
-    normalizeName();
     ensureOutputDirectory();
     buildRom(options);
 
-    if (romPath)
+    if (run)
     {
-        copyOutputToRomsDirectory();
+        runRom(options);
     }
-}
-
-function normalizeName()
-{
-    if (name.endsWith('.asm'))
-    {
-        name = name.replace('.asm', '');
-    }
-}
-
-function showHelp()
-{
-    const usage = getCommandLineUsage();
-    console.log(usage);
-}
-
-function ensureOutputDirectory()
-{
-    shell('mkdir -p out');
-}
-
-function copyOutputToRomsDirectory()
-{
-    shell(`cp 'out/${name}.'* '${romPath}/'`);
 }
