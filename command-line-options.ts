@@ -29,7 +29,7 @@ function normalizeName(commandLineOptions: ICommandLineOptions)
     }
 
     commandLineOptions.name = commandLineOptions.name
-        .replace(srcPath, '')
+        .replace(`${srcPath}/`, '')
         .replace('.asm', '');
 }
 

@@ -5,6 +5,7 @@
     include "lib/RAM.asm"
     include "lib/Console.asm"
     include "lib/Macros.asm"
+    include "lib/Scanlines.asm"
 
     seg ROM
     org $f000

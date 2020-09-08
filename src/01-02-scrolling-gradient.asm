@@ -1,5 +1,4 @@
     include "lib/2K.asm"
-    include "lib/scanlines.asm"
 
     ; Variables
     seg.u RAM

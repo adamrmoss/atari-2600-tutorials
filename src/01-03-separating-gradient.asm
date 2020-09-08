@@ -1,10 +1,9 @@
-    include "lib/2K.asm"
-
     ; Scanline count constants
 VBLANK_LINE_COUNT   =  27
 PICTURE_LINE_COUNT  = 208
 OVERSCAN_LINE_COUNT =  24
-    include "lib/scanlines.asm"
+
+    include "lib/2K.asm"
 
     ; Variables
     seg.u RAM
