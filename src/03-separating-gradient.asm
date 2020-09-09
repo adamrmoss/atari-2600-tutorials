@@ -1,7 +1,7 @@
     ; Scanline count constants
-VBLANK_LINE_COUNT   =  27
-PICTURE_LINE_COUNT  = 208
-OVERSCAN_LINE_COUNT =  24
+VBLANK_LINE_COUNT   =  20
+PICTURE_LINE_COUNT  = 230
+OVERSCAN_LINE_COUNT =   9
 
     include "lib/2K.asm"
 
