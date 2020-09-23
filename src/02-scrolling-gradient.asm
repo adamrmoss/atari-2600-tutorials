@@ -10,6 +10,8 @@ INITIAL_STARTING_COLOR = $0a
     ; Program
     seg ROM
 Start:
+    CLEAN_START
+
     lda #INITIAL_STARTING_COLOR
     sta ColorPhase
     sta COLUBK
