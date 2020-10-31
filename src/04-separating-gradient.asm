@@ -7,7 +7,7 @@ OVERSCAN_LINE_COUNT =  10
 
     ; Variables
     seg.u RAM
-ColorPhase: byte
+ColorPhase: .byte
 
     ; Constants
 INITIAL_STARTING_COLOR = $0a
@@ -83,6 +83,6 @@ OverscanLoop:
     ; Fill remaining cartridge space
     org $fffc
     ; Reset Vector
-    word Start
+    .word Start
     ; IRQ Vector
-    word Start
+    .word Start

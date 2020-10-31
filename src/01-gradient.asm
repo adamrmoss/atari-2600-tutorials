@@ -30,8 +30,8 @@ StartFrame:
     ; Draw Visible Picture
 BACKGROUND_COLOR set 0
     repeat PICTURE_LINE_COUNT
-BACKGROUND_COLOR set (BACKGROUND_COLOR - 2) % 256
-        ldy #BACKGROUND_COLOR
+BACKGROUND_COLOR set BACKGROUND_COLOR + 2
+        ldy #<BACKGROUND_COLOR
         sty COLUBK
         sty WSYNC
     repend
