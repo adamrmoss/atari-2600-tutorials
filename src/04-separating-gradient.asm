@@ -1,7 +1,7 @@
     ; Scanline count constants
-VBLANK_LINE_COUNT   =  20
-PICTURE_LINE_COUNT  = 230
-OVERSCAN_LINE_COUNT =   9
+VBLANK_LINE_COUNT   =   9
+PICTURE_LINE_COUNT  = 240
+OVERSCAN_LINE_COUNT =  10
 
     include "lib/2K.asm"
 
@@ -62,7 +62,7 @@ BottomLineLoop:
     dey
     dex
     bne BottomLineLoop
-    sta WSYNC
+    sty WSYNC
 
     ; Enable VBLANK
     lda #$02
