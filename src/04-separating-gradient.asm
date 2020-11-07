@@ -21,26 +21,16 @@ Start:
     sta ColorPhase
     sta COLUBK
 
-    ; Enable VBLANK
-    lda #$02
-    sta VBLANK
-
 StartFrame:
+    START_VBLANK
+
     ; Increment ColorPhase twice
     inc ColorPhase
     inc ColorPhase
 
-    ; Output VBlank
-    ldx #VBLANK_LINE_COUNT
-VBlankLoop:
-    sta WSYNC
-    dex
-    bne VBlankLoop
+    FINISH_VBLANK
 
-    ; Turn off VBLANK
-    lda #$00
-    sta VBLANK
-
+    stx WSYNC
     ldy ColorPhase
 
     ; Draw Top Half of Visible Picture
@@ -64,17 +54,11 @@ BottomLineLoop:
     bne BottomLineLoop
     sty WSYNC
 
-    ; Enable VBLANK
-    lda #$02
-    sta VBLANK
+    START_OVERSCAN
 
-    ; Overscan lines
-    ldx #OVERSCAN_LINE_COUNT
-OverscanLoop:
-    sta WSYNC
-    dex
-    bne OverscanLoop
-
+    FINISH_OVERSCAN
+    stx WSYNC
+    
     VERTICAL_SYNC
 
     ; Start over for the next Frame
