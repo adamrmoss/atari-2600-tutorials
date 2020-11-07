@@ -12,9 +12,9 @@ export function buildRom({ name, verbose }: { name: string; verbose: boolean; })
     const listFilePath        = `${outPath}/${name}.lst`;
     const symbolFilePath      = `${outPath}/${name}.sym`;
     const buildOutputFilePath = `${outPath}/${name}.bin`;
-    const verbosityLevel = verbose ? 1 : 0;
+    const verbosity = verbose ? '-v1 -DVERBOSE' : '-v0';
 
-    shell(`dasm ${inputFilePath} -f3 -v${verbosityLevel} -T1 -l${listFilePath} -s${symbolFilePath} -o${buildOutputFilePath}`);
+    shell(`dasm ${inputFilePath} -f3 ${verbosity} -T1 -l${listFilePath} -s${symbolFilePath} -o${buildOutputFilePath}`);
 }
 
 export function runRom({ name }: { name: string }) {
