@@ -48,27 +48,6 @@
     endm
 
 ;╔══════════════════════════════════════════════════════════════════════════╗
-;║ VERTICAL_SYNC                                                            ║
-;╠══════════════════════════════════════════════════════════════════════════╣
-;║ Original author: Manuel Polik                                            ║
-;╠══════════════════════════════════════════════════════════════════════════╣
-;║ Inserts the code required for a proper 3 scannline                       ║
-;║ vertical sync sequence                                                   ║
-;╠══════════════════════════════════════════════════════════════════════════╣
-;║ OUT: A = 1                                                               ║
-;╚══════════════════════════════════════════════════════════════════════════╝
-    mac VERTICAL_SYNC
-        lda #$02            ; A = VSYNC enable
-        sta WSYNC           ; Finish current line
-        sta VSYNC           ; Start vertical sync
-        sta WSYNC           ; 1st line vertical sync
-        sta WSYNC           ; 2nd line vertical sync
-        lsr                 ; A = VSYNC disable
-        sta WSYNC           ; 3rd line vertical sync
-        sta VSYNC           ; Stop vertical sync
-    endm
-
-;╔══════════════════════════════════════════════════════════════════════════╗
 ;║ SET_WORD address, value                                                  ║
 ;╠══════════════════════════════════════════════════════════════════════════╣
 ;║ Original author: Manuel Rotschkar                                        ║

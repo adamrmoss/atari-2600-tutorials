@@ -31,3 +31,24 @@ ACTUAL_LINE_COUNT = VSYNC_LINE_COUNT + VBLANK_LINE_COUNT + PICTURE_LINE_COUNT + 
     if TOTAL_LINE_COUNT != ACTUAL_LINE_COUNT
         THROW2 "Error: ACTUAL_LINE_COUNT !=", TOTAL_LINE_COUNT
     endif
+
+;╔══════════════════════════════════════════════════════════════════════════╗
+;║ VERTICAL_SYNC                                                            ║
+;╠══════════════════════════════════════════════════════════════════════════╣
+;║ Original author: Manuel Polik                                            ║
+;╠══════════════════════════════════════════════════════════════════════════╣
+;║ Inserts the code required for a proper 3 scanline                        ║
+;║ vertical sync sequence                                                   ║
+;╠══════════════════════════════════════════════════════════════════════════╣
+;║ OUT: A = 1                                                               ║
+;╚══════════════════════════════════════════════════════════════════════════╝
+    mac VERTICAL_SYNC
+        lda #$02            ; A = VSYNC enable
+        sta WSYNC           ; Finish current line
+        sta VSYNC           ; Start vertical sync
+        sta WSYNC           ; 1st line vertical sync
+        sta WSYNC           ; 2nd line vertical sync
+        lsr                 ; A = VSYNC disable
+        sta WSYNC           ; 3rd line vertical sync
+        sta VSYNC           ; Stop vertical sync
+    endm

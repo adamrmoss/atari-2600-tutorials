@@ -1,3 +1,8 @@
+    ; Scanline count constants
+VBLANK_LINE_COUNT   =   9
+PICTURE_LINE_COUNT  = 240
+OVERSCAN_LINE_COUNT =  10
+
     include "lib/2K.asm"
 
     ; Variables
@@ -47,14 +52,13 @@ VisibleLineLoop:
     dey
     dex
     bne VisibleLineLoop
-    sta WSYNC
 
     ; Enable VBLANK
     lda #$02
     sta VBLANK
 
     ; Overscan lines
-    ldx #OVERSCAN_LINE_COUNT
+    ldx #OVERSCAN_LINE_COUNT - 1
 OverscanLoop:
     sta WSYNC
     dex
