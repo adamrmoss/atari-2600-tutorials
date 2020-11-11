@@ -1,7 +1,7 @@
 {
   "name": "atari-2600-tutorials",
-  "version": "0.0.1",
-  "description": "Tutorials to learn Atari 2600 hardware, 6502 assembler, and cc65 toolchain",
+  "version": "0.1.0",
+  "description": "Tutorials to learn Atari 2600 hardware, 6502 assembler, and dasm toolchain",
   "author": "Adam R Moss",
   "license": "Unlicense",
   "bugs": {
@@ -32,6 +32,7 @@
     "typescript": "^4.0.2"
   },
   "scripts": {
-    "build": "npx ts-node build.ts"
+    "build": "npx ts-node cli/build.ts",
+    "start": "npx ts-node cli/build.ts -h"
   }
 }

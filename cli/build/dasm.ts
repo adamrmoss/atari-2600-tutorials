@@ -1,4 +1,4 @@
-import shell from './shell';
+import shell from '../shell';
 import { srcPath, outPath } from './paths';
 
 export function ensureOutputDirectory()

@@ -1,5 +1,5 @@
-import { getCommandLineOptions, showHelp } from './command-line-options';
-import { ensureOutputDirectory, buildRom, runRom } from './dasm';
+import { getCommandLineOptions, showHelp } from './build/command-line-options';
+import { ensureOutputDirectory, buildRom, runRom } from './build/dasm';
 
 const options = getCommandLineOptions();
 const { help, name, run } = options;
