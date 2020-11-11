@@ -1,9 +1,9 @@
 
-import commandLineArgs from 'command-line-args';
+import commandLineArgs, { OptionDefinition } from 'command-line-args';
 import commandLineUsage from 'command-line-usage';
 
 import { ansiLogo } from '../logo';
-import { srcPath } from './paths';
+import { srcPath } from '../paths';
 
 export interface ICommandLineOptions 
 {

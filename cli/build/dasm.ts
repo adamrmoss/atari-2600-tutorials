@@ -1,5 +1,5 @@
 import shell from '../shell';
-import { srcPath, outPath } from './paths';
+import { srcPath, outPath } from '../paths';
 
 export function ensureOutputDirectory()
 {

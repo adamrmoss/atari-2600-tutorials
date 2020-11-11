@@ -26,7 +26,7 @@
     "@types/exit": "^0.1.31",
     "ansi-escape-sequences": "^4.1.0",
     "command-line-args": "^5.1.1",
-    "command-line-usage": "^4.1.0",
+    "command-line-usage": "^5.0.1",
     "exit": "^0.1.2",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.2"
