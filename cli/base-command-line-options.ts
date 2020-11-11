@@ -1,7 +1,7 @@
 import commandLineArgs, { OptionDefinition } from 'command-line-args';
 import commandLineUsage, { Section } from 'command-line-usage';
 
-import { srcPath } from './paths';
+import { libPath, srcPath } from './paths';
 
 export interface IBaseCommandLineOptions 
 {
@@ -27,7 +27,9 @@ function normalizeName(commandLineOptions: IBaseCommandLineOptions)
 
     commandLineOptions.name = commandLineOptions.name
         .replace(`${srcPath}/`, '')
-        .replace('.asm', '');
+        .replace(`${libPath}/`, '')
+        .replace('.asm', '')
+        .replace('.bin', '');
 }
 
 export function showHelp(usageSections: Section[])

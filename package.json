@@ -33,6 +33,7 @@
   },
   "scripts": {
     "build": "npx ts-node cli/build.ts",
+    "generate": "npx ts-node cli/generate.ts",
     "start": "npx ts-node cli/build.ts -h"
   }
 }

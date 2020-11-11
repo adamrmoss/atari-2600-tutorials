@@ -25,17 +25,17 @@ export const optionsDefinitions =
             default: false
         },
         {
-            name: 'name',
-            description: '[bold italic]{Required} The name portion of both the assembly source and binary output',
-            type: String,
-            defaultOption: true
-        },
-        {
             name: 'run',
             alias: 'r',
             description: 'Run game in Stella after building?',
             type: Boolean,
             default: false
+        },
+        {
+            name: 'name',
+            description: '[bold italic]{Required} The name portion of both the assembly source and binary output',
+            type: String,
+            defaultOption: true
         }
     ];
 
