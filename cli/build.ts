@@ -1,12 +1,13 @@
-import { getCommandLineOptions, showHelp } from './build/command-line-options';
+import { getCommandLineOptions, showHelp } from './base-command-line-options';
+import { ICommandLineOptions, optionsDefinitions, usageSections } from './build/command-line-options';
 import { ensureOutputDirectory, buildRom, runRom } from './build/dasm';
 
-const options = getCommandLineOptions();
+const options = getCommandLineOptions<ICommandLineOptions>(optionsDefinitions);
 const { help, name, run } = options;
 
 if (help || !name)
 {
-    showHelp();
+    showHelp(usageSections);
 } else
 {
     ensureOutputDirectory();

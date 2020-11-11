@@ -1,44 +1,14 @@
-
-import commandLineArgs, { OptionDefinition } from 'command-line-args';
-import commandLineUsage from 'command-line-usage';
+import { IBaseCommandLineOptions } from '../base-command-line-options';
 
 import { ansiLogo } from '../logo';
-import { srcPath } from '../paths';
 
-export interface ICommandLineOptions 
+export interface ICommandLineOptions extends IBaseCommandLineOptions
 {
-    help: boolean;
     verbose: boolean;
-    name: string;
     run: boolean;
 }
 
-export function getCommandLineOptions()
-{
-    const commandLineOptions = (commandLineArgs(optionsDefinitions) as ICommandLineOptions);
-    normalizeName(commandLineOptions);
-
-    return commandLineOptions;
-}
-
-function normalizeName(commandLineOptions: ICommandLineOptions)
-{
-    if (!commandLineOptions.name)
-    {
-        return;
-    }
-
-    commandLineOptions.name = commandLineOptions.name
-        .replace(`${srcPath}/`, '')
-        .replace('.asm', '');
-}
-
-export function getCommandLineUsage()
-{
-    return commandLineUsage(usageSections);
-}
-
-const optionsDefinitions =
+export const optionsDefinitions =
     [
         {
             name: 'help',
@@ -69,7 +39,7 @@ const optionsDefinitions =
         }
     ];
 
-const usageSections =
+export const usageSections =
     [
         {
             content: ansiLogo,
@@ -88,9 +58,3 @@ const usageSections =
             optionList: optionsDefinitions
         }
     ];
-
-export function showHelp()
-{
-    const usage = getCommandLineUsage();
-    console.log(usage);
-}
