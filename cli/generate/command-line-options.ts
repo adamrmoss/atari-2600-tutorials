@@ -6,10 +6,10 @@ import { DataSize } from './data-size';
 
 export interface ICommandLineOptions extends IBaseCommandLineOptions
 {
-    expression: string;
     min: number;
     max: number;
     dataSize: DataSize;
+    expression: string;
 }
 
 export const optionsDefinitions =
@@ -17,30 +17,37 @@ export const optionsDefinitions =
         {
             name: 'help',
             alias: 'h',
-            description: 'Display this usage guide?',
+            description: 'Display this usage guide?\nDefault Value: [bold italic]{false}',
             type: Boolean,
-            default: false
+            defaultValue: false
+        },
+        {
+            name: 'min',
+            alias: 'n',
+            description: 'Inclusive inimum index of table\nDefault Value: [bold italic]{0}',
+            type: Number,
+            defaultValue: 0
+        },
+        {
+            name: 'max',
+            alias: 'x',
+            description: 'Inclusive maximum index of table\nDefault Value: [bold italic]{255}',
+            type: Number,
+            defaultValue: 255
+        },
+        {
+            name: 'dataSize',
+            alias: 'd',
+            description: 'Size of generated table cell: [bold italic]{byte}, [bold italic]{word}, or [bold italic]{fixed-point}\n'
+                             + 'Default Value: [bold italic]{byte}',
+            type: String,
+            defaultValue: 'byte'
         },
         {
             name: 'expression',
             alias: 'e',
             description: '[bold italic]{Required} The [bold]{JS} expression to be evaluated',
-            type: String,
-            default: false
-        },
-        {
-            name: 'min',
-            alias: 'n',
-            description: '[bold italic]{Required} Minimum index of table',
-            type: Number,
-            default: false
-        },
-        {
-            name: 'max',
-            alias: 'x',
-            description: '[bold italic]{Required} Maximum index of table',
-            type: Number,
-            default: false
+            type: String
         },
         {
             name: 'name',

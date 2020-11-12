@@ -13,23 +13,23 @@ export const optionsDefinitions =
         {
             name: 'help',
             alias: 'h',
-            description: 'Display this usage guide?',
+            description: 'Display this usage guide?\nDefault Value: [bold italic]{false}',
             type: Boolean,
-            default: false
+            defaultValue: false
         },
         {
             name: 'verbose',
             alias: 'v',
-            description: 'Show verbose build?',
+            description: 'Show verbose build?\nDefault Value: [bold italic]{false}',
             type: Boolean,
-            default: false
+            defaultValue: false
         },
         {
             name: 'run',
             alias: 'r',
-            description: 'Run game in Stella after building?',
+            description: 'Run game in Stella after building?\nDefault Value: [bold italic]{false}',
             type: Boolean,
-            default: false
+            defaultValue: false
         },
         {
             name: 'name',
