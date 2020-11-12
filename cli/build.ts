@@ -8,7 +8,8 @@ const { help, name, run } = options;
 if (help || !name)
 {
     showHelp(usageSections);
-} else
+}
+else
 {
     ensureOutputDirectory();
     buildRom(options);

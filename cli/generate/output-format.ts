@@ -1,4 +1,5 @@
-export enum OutputFormat {
+export enum OutputFormat
+{
     asm = 'asm',
     bin = 'bin'
 }

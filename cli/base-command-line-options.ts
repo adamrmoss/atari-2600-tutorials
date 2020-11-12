@@ -11,7 +11,8 @@ export interface IBaseCommandLineOptions
 
 export function getCommandLineOptions<TCommandLineOptions extends IBaseCommandLineOptions>(
     optionsDefinitions: OptionDefinition[]
-) {
+): TCommandLineOptions
+{
     const commandLineOptions = (commandLineArgs(optionsDefinitions) as TCommandLineOptions);
     normalizeName(commandLineOptions);
 
@@ -32,13 +33,13 @@ function normalizeName(commandLineOptions: IBaseCommandLineOptions)
         .replace('.bin', '');
 }
 
-export function showHelp(usageSections: Section[])
+export function showHelp(usageSections: Section[]): void
 {
     const usage = getCommandLineUsage(usageSections);
     console.log(usage);
 }
 
-export function getCommandLineUsage(usageSections: Section[])
+export function getCommandLineUsage(usageSections: Section[]): string
 {
     return commandLineUsage(usageSections);
 }

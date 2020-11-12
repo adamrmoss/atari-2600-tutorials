@@ -1,11 +1,14 @@
 import { execSync } from 'child_process';
 import exit from 'exit';
 
-export default function shell(command: string)
+export default function shell(command: string): void
 {
-    try {
+    try 
+    {
         execSync(command, { stdio: 'inherit' });
-    } catch {
+    }
+    catch 
+    {
         exit(1);
     }
 }

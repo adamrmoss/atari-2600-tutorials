@@ -7,9 +7,12 @@ const { help, name, expression, min, max, dataSize } = options;
 if (help || !expression || !name)
 {
     showHelp(usageSections);
-} else if (min > max) {
+}
+else if (min > max)
+{
     console.error('Error: min > max');
-} else
+}
+else
 {
     console.log(`Generating: ${expression} as ${dataSize}s between ${min} and ${max}!`);
 }

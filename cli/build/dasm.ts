@@ -1,12 +1,12 @@
 import shell from '../shell';
 import { srcPath, outPath } from '../paths';
 
-export function ensureOutputDirectory()
+export function ensureOutputDirectory(): void
 {
     shell(`mkdir -p ${outPath}`);
 }
 
-export function buildRom({ name, verbose }: { name: string; verbose: boolean; })
+export function buildRom({ name, verbose }: { name: string; verbose: boolean; }): void
 {
     const inputFilePath       = `${srcPath}/${name}.asm`;
     const listFilePath        = `${outPath}/${name}.lst`;
@@ -17,7 +17,8 @@ export function buildRom({ name, verbose }: { name: string; verbose: boolean; })
     shell(`dasm ${inputFilePath} -f3 ${verbosity} -T1 -l${listFilePath} -s${symbolFilePath} -o${buildOutputFilePath}`);
 }
 
-export function runRom({ name }: { name: string }) {
+export function runRom({ name }: { name: string }): void
+{
     console.log(`${outPath}/${name}.bin`);
     shell(`stella ${outPath}/${name}.bin`);
 }
