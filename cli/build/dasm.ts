@@ -1,11 +1,6 @@
 import shell from '../shell';
 import { srcPath, outPath } from '../paths';
 
-export function ensureOutputDirectory(): void
-{
-    shell(`mkdir -p ${outPath}`);
-}
-
 export function buildRom({ name, verbose }: { name: string; verbose: boolean; }): void
 {
     const inputFilePath       = `${srcPath}/${name}.asm`;

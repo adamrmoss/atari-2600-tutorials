@@ -1,5 +1,4 @@
 import { IBaseCommandLineOptions } from '../base-command-line-options';
-
 import { ansiLogo } from '../logo';
 
 export interface ICommandLineOptions extends IBaseCommandLineOptions

@@ -6,8 +6,7 @@ import { DataSize } from './data-size';
 
 export interface ICommandLineOptions extends IBaseCommandLineOptions
 {
-    min: number;
-    max: number;
+    length: number;
     dataSize: DataSize;
     expression: string;
 }
@@ -22,18 +21,11 @@ export const optionsDefinitions =
             defaultValue: false
         },
         {
-            name: 'min',
-            alias: 'n',
-            description: 'Inclusive inimum index of table\nDefault Value: [bold italic]{0}',
+            name: 'length',
+            alias: 'l',
+            description: 'Length and Exclusive Maximum Index of generated table\nDefault Value: [bold italic]{256}',
             type: Number,
-            defaultValue: 0
-        },
-        {
-            name: 'max',
-            alias: 'x',
-            description: 'Inclusive maximum index of table\nDefault Value: [bold italic]{255}',
-            type: Number,
-            defaultValue: 255
+            defaultValue: 256
         },
         {
             name: 'dataSize',
@@ -46,12 +38,13 @@ export const optionsDefinitions =
         {
             name: 'expression',
             alias: 'e',
-            description: '[bold italic]{Required} The [bold]{JS} expression to be evaluated',
+            description: '[bold italic]{Required} The [bold]{JS} expression to be evaluated\n'
+                             + 'Should be a function of [italic]{t} where [bold italic]{0 ≤ t < length}',
             type: String
         },
         {
             name: 'name',
-            description: '[bold italic]{Required} The name portion of the assembly or binary output',
+            description: '[bold italic]{Required} The name portion of the binary output',
             type: String,
             defaultOption: true
         }
