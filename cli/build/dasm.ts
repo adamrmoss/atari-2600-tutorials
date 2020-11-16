@@ -14,6 +14,5 @@ export function buildRom({ name, verbose }: { name: string; verbose: boolean; })
 
 export function runRom({ name }: { name: string }): void
 {
-    console.log(`${outPath}/${name}.bin`);
     shell(`stella ${outPath}/${name}.bin`);
 }
