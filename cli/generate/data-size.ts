@@ -6,22 +6,24 @@ export enum DataSize
 
 export default DataSize;
 
-export function getNumberData(num: number, dataSize: DataSize): string
+export function getLengthInBytes(dataSize: DataSize): 1 | 2
 {
     switch (dataSize)
     {
-        case DataSize.byte: {
-            const value = num % 256;
-            return numberToHex(value);
-        }
-        case DataSize.word: {
-            const value = num % 65536;
-            return numberToHex(value);
-        }
+        case DataSize.byte:
+            return 1;
+        case DataSize.word:
+            return 2;
     }
 }
 
-function numberToHex(num: number)
+export function getDataByte(value: number, byteIndex: 0 | 1): number
 {
-    return num.toString(16);
+    switch (byteIndex)
+    {
+        case 0:
+            return value % 0x100;
+        case 1:
+            return value / 0x100;
+    }
 }
