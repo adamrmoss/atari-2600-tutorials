@@ -14,6 +14,15 @@ VSYNC_LINE_COUNT    =   3
 
     org $f800
 
+Start:
+    ; Clear Memory
+    lda #$0
+RAM_LOCATION set 0
+    repeat 255
+        sta RAM_LOCATION
+RAM_LOCATION set RAM_LOCATION + 1
+    repend
+
 StartFrame:
     ; Enable VBLANK
     lda #$02
@@ -67,6 +76,6 @@ BACKGROUND_COLOR set BACKGROUND_COLOR + 2
 
     org $fffc
     ; Reset Vector
-    .word StartFrame
+    .word Start
     ; IRQ Vector
-    .word StartFrame
+    .word Start
