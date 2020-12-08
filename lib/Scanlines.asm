@@ -112,8 +112,6 @@ OVERSCAN_WSYNC_COUNT = ((OVERSCAN_LINE_COUNT * 76) - (OVERSCAN_64T_COUNT * 64) +
 ;╔══════════════════════════════════════════════════════════════════════════╗
 ;║ VERTICAL_SYNC                                                            ║
 ;╠══════════════════════════════════════════════════════════════════════════╣
-;║ Original author: Manuel Polik                                            ║
-;╠══════════════════════════════════════════════════════════════════════════╣
 ;║ Inserts the code required for a proper 3 scanline                        ║
 ;║ vertical sync sequence                                                   ║
 ;╠══════════════════════════════════════════════════════════════════════════╣
@@ -121,7 +119,6 @@ OVERSCAN_WSYNC_COUNT = ((OVERSCAN_LINE_COUNT * 76) - (OVERSCAN_64T_COUNT * 64) +
 ;╚══════════════════════════════════════════════════════════════════════════╝
     mac VERTICAL_SYNC
         lda #$02            ; A = VSYNC enable
-        sta WSYNC           ; Finish current line
         sta VSYNC           ; Start vertical sync
         sta WSYNC           ; 1st line vertical sync
         sta WSYNC           ; 2nd line vertical sync
