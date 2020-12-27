@@ -10,9 +10,9 @@ export function buildRom({ name, verbose }: { name: string; verbose: boolean; })
     const paths = `-l${listFilePath} -s${symbolFilePath} -o${buildOutputFilePath}`;
 
     const verbosity = verbose ? '-v1 -DVERBOSE' : '-v0';
-    const flags = `${inputFilePath} -f3 -T1 ${verbosity}`;
+    const flags = `-f3 -T1 ${verbosity}`;
 
-    shell(`dasm ${flags} ${paths}`);
+    shell(`dasm ${inputFilePath} ${flags} ${paths}`);
 }
 
 export function runRom({ name }: { name: string }): void
