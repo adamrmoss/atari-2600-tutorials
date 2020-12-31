@@ -1,18 +1,24 @@
-    ; Scanline count constants
-VBLANK_LINE_COUNT   =   9
-PICTURE_LINE_COUNT  = 240
-OVERSCAN_LINE_COUNT =  10
+;    ; Scanline count constants
+;VBLANK_LINE_COUNT   =   9
+;PICTURE_LINE_COUNT  = 240
+;OVERSCAN_LINE_COUNT =  10
 
     include "lib/2K.asm"
 
-    ; Variables
+;╔══════════════════════════════════════════════════════════════════════════╗
+;║ Variables                                                                ║
+;╚══════════════════════════════════════════════════════════════════════════╝
     seg.u RAM
 ColorPhase: .byte
 
-    ; Constants
+;╔══════════════════════════════════════════════════════════════════════════╗
+;║ Constants                                                                  ║
+;╚══════════════════════════════════════════════════════════════════════════╝
 INITIAL_STARTING_COLOR = $0a
 
-    ; Program
+;╔══════════════════════════════════════════════════════════════════════════╗
+;║ Program                                                                  ║
+;╚══════════════════════════════════════════════════════════════════════════╝
     seg ROM
 Start:
     CLEAN_START
@@ -30,11 +36,10 @@ StartFrame:
 
     FINISH_VBLANK
 
-    stx WSYNC
     ldy ColorPhase
 
     ; Draw Top Half of Visible Picture
-    ldx #PICTURE_LINE_COUNT / 2 - 1
+    ldx #PICTURE_LINE_COUNT / 2
 TopLineLoop:
     sty COLUBK
     sty WSYNC
@@ -44,7 +49,7 @@ TopLineLoop:
     bne TopLineLoop
 
     ; Draw Bottom Half of Visible Picture
-    ldx #PICTURE_LINE_COUNT / 2 - 1
+    ldx #PICTURE_LINE_COUNT / 2
 BottomLineLoop:
     sty COLUBK
     sty WSYNC
@@ -52,13 +57,11 @@ BottomLineLoop:
     dey
     dex
     bne BottomLineLoop
-    sty WSYNC
-
+    
     START_OVERSCAN
 
     FINISH_OVERSCAN
-    stx WSYNC
-    
+
     VERTICAL_SYNC
 
     ; Start over for the next Frame
