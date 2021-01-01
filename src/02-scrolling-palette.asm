@@ -17,8 +17,16 @@ INITIAL_STARTING_COLOR = $0a
     seg ROM
 
 Start:
-    CLEAN_START
+    ; Clear Memory
+    lda #0
+    ldx #$ff
+ClearMemoryLoop:
+    sta 0,x
+    dex
+    bne ClearMemoryLoop
+    sta 0
 
+    ; Initialize Color
     lda #INITIAL_STARTING_COLOR
     sta ColorPhase
     sta COLUBK
