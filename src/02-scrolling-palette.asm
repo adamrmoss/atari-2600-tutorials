@@ -72,8 +72,4 @@ OverscanLoop:
     jmp StartFrame
 
     ; Fill remaining cartridge space
-    org $fffc
-    ; Reset Vector
-    .word Start
-    ; IRQ Vector
-    .word Start
+    FILL_CARTRIDGE Start

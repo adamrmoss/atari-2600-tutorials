@@ -1,8 +1,3 @@
-;    ; Scanline count constants
-;VBLANK_LINE_COUNT   =   9
-;PICTURE_LINE_COUNT  = 240
-;OVERSCAN_LINE_COUNT =  10
-
     include "lib/2K.asm"
 
 ;╔══════════════════════════════════════════════════════════════════════════╗
@@ -12,7 +7,7 @@
 ColorPhase: .byte
 
 ;╔══════════════════════════════════════════════════════════════════════════╗
-;║ Constants                                                                  ║
+;║ Constants                                                                ║
 ;╚══════════════════════════════════════════════════════════════════════════╝
 INITIAL_STARTING_COLOR = $0a
 
@@ -68,8 +63,4 @@ BottomLineLoop:
     jmp StartFrame
 
     ; Fill remaining cartridge space
-    org $fffc
-    ; Reset Vector
-    .word Start
-    ; IRQ Vector
-    .word Start
+    FILL_CARTRIDGE Start

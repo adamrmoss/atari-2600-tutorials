@@ -1,13 +1,30 @@
-VBLANK_64T_COUNT     = (VBLANK_LINE_COUNT   * 76 / 64)
-OVERSCAN_64T_COUNT   = (OVERSCAN_LINE_COUNT * 76 / 64)
+;╔═══════════════════════════════════════════════════════════╗
+;║ TIMER_SETUP scanlines                                     ║
+;╠═══════════════════════════════════════════════════════════╣
+;║ Setup TIM64 to wait for a number of scanlines (> 2).      ║
+;║ The timer will be set so that it expires before this      ║
+;║ number of scanlines. A WSYNC will be done first.          ║
+;╚═══════════════════════════════════════════════════════════╝
+    mac TIMER_SETUP
+.ScanLines set {1}
+        lda #(((.ScanLines - 1) * 76 - 14) / 64) + 1
+        sta WSYNC
+        sta TIM64T
+    endm
 
-VBLANK_WSYNC_COUNT   = ((VBLANK_LINE_COUNT   * 76) - (VBLANK_64T_COUNT   * 64) + 76 - 14) / 76
-OVERSCAN_WSYNC_COUNT = ((OVERSCAN_LINE_COUNT * 76) - (OVERSCAN_64T_COUNT * 64) + 76 - 14) / 76
-
-    LOG2 "VBLANK_64T_COUNT     =", [VBLANK_64T_COUNT]d
-    LOG2 "VBLANK_WSYNC_COUNT   =", [VBLANK_WSYNC_COUNT]d
-    LOG2 "OVERSCAN_64T_COUNT   =", [OVERSCAN_64T_COUNT]d
-    LOG2 "OVERSCAN_WSYNC_COUNT =", [OVERSCAN_WSYNC_COUNT]d
+;╔═══════════════════════════════════════════════════════════╗
+;║ TIMER_WAIT                                                ║
+;╠═══════════════════════════════════════════════════════════╣
+;║ Use with TIMER_SETUP to wait for timer to complete.       ║
+;║ You may want to do a WSYNC afterwards, since the timer    ║
+;║ is not accurate to the beginning/end of a scanline.       ║
+;╚═══════════════════════════════════════════════════════════╝
+    mac TIMER_WAIT
+.WaitTimer
+        lda INTIM
+        bne .WaitTimer
+        sta WSYNC
+    endm
 
 ;╔═══════════════════════════════════════════════════════════╗
 ;║ START_VBLANK                                              ║
@@ -15,9 +32,7 @@ OVERSCAN_WSYNC_COUNT = ((OVERSCAN_LINE_COUNT * 76) - (OVERSCAN_64T_COUNT * 64) +
 ;║ Enable VBlank and Initialize Timer                        ║
 ;╚═══════════════════════════════════════════════════════════╝
     mac START_VBLANK
-        ; Initialize Timer
-        lda #VBLANK_64T_COUNT
-        sta TIM64T
+        TIMER_SETUP VBLANK_LINE_COUNT
 
         ; Enable VBLANK
         lda #$02
@@ -30,14 +45,7 @@ OVERSCAN_WSYNC_COUNT = ((OVERSCAN_LINE_COUNT * 76) - (OVERSCAN_64T_COUNT * 64) +
 ;║ Wait for VBlank timer to end then turn off                ║
 ;╚═══════════════════════════════════════════════════════════╝
     mac FINISH_VBLANK
-.FinishingVBlank:
-        lda INTIM
-        bne .FinishingVBlank
-
-        ; Unroll Scanlines of VBlank
-        repeat VBLANK_WSYNC_COUNT
-            sta WSYNC
-        repend
+        TIMER_WAIT
 
         ; Turn off VBLANK
         lda #$00
@@ -50,9 +58,7 @@ OVERSCAN_WSYNC_COUNT = ((OVERSCAN_LINE_COUNT * 76) - (OVERSCAN_64T_COUNT * 64) +
 ;║ Start Overscan timer, then turn on VBlank                 ║
 ;╚═══════════════════════════════════════════════════════════╝
     mac START_OVERSCAN
-        ; Start Overscan Timer
-        lda #OVERSCAN_64T_COUNT
-        sta TIM64T
+        TIMER_SETUP OVERSCAN_LINE_COUNT
 
         ; Enable VBLANK
         lda #$02
@@ -65,14 +71,11 @@ OVERSCAN_WSYNC_COUNT = ((OVERSCAN_LINE_COUNT * 76) - (OVERSCAN_64T_COUNT * 64) +
 ;║ Wait for Overscan timer to end                            ║
 ;╚═══════════════════════════════════════════════════════════╝
     mac FINISH_OVERSCAN
-.FinishingOverscan:
-        lda INTIM
-        bne .FinishingOverscan
+        TIMER_WAIT
 
-        ; Unroll Scanlines of Overscan
-        repeat OVERSCAN_WSYNC_COUNT
-            sta WSYNC
-        repend
+        ; Turn off VBLANK
+        lda #$00
+        sta VBLANK
     endm
 
 ;╔══════════════════════════════════════════════════════════════════════════╗
