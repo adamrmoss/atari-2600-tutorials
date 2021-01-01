@@ -19,5 +19,5 @@ export function buildRom({ name, verbose }: ICommandLineOptions): void
 
 export function runRom({ name }: ICommandLineOptions): void
 {
-    shell(`stella ${outPath}/${name}.bin`);
+    shell(`stella ${outPath}/${name}.bin -format NTSC`);
 }
