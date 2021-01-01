@@ -1,12 +1,10 @@
-# Atari 2600 (Stella) support for multiple assemblers
-# - DASM
-# - CC65
+Thumbs.db
+.DS_Store
 
-# Assembled binaries and object directories
-obj/
-a.out
-*.bin
-*.a26
+.npm
+node_modules
+logs
+*.log
+npm-debug.log*
 
-# Add in special Atari 7800-based binaries for good measure
-*.a78
+out/
