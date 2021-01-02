@@ -7,7 +7,4 @@ logs
 *.log
 npm-debug.log*
 
-*.sublime-workspace
-
-[Oo]ut/
-[Bb]in/
+out/
