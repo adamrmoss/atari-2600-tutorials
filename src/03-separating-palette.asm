@@ -15,21 +15,41 @@ INITIAL_STARTING_COLOR = $0a
 ; ║ Program                                                                  ║
 ; ╚══════════════════════════════════════════════════════════════════════════╝
     seg ROM
-Start:
-    CLEAN_START
 
+Start:
+    ; Clear Memory
+    lda #0
+    ldx #$ff
+ClearMemoryLoop:
+    sta 0,x
+    dex
+    bne ClearMemoryLoop
+    sta 0
+
+    ; Initialize Color
     lda #INITIAL_STARTING_COLOR
     sta ColorPhase
     sta COLUBK
 
-StartFrame:
-    START_VBLANK
+    ; Enable VBLANK
+    lda #$02
+    sta VBLANK
 
+StartFrame:
     ; Increment ColorPhase twice
     inc ColorPhase
     inc ColorPhase
 
-    FINISH_VBLANK
+    ; Output VBlank
+    ldx #VBLANK_LINE_COUNT
+VBlankLoop:
+    sta WSYNC
+    dex
+    bne VBlankLoop
+
+    ; Turn off VBLANK
+    lda #$00
+    sta VBLANK
 
     ldy ColorPhase
 
@@ -53,9 +73,16 @@ BottomLineLoop:
     dex
     bne BottomLineLoop
     
-    START_OVERSCAN
+    ; Enable VBLANK
+    lda #$02
+    sta VBLANK
 
-    FINISH_OVERSCAN
+    ; Overscan lines
+    ldx #OVERSCAN_LINE_COUNT
+OverscanLoop:
+    sta WSYNC
+    dex
+    bne OverscanLoop
 
     VERTICAL_SYNC
 

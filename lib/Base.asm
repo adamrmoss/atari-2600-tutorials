@@ -9,7 +9,7 @@
     include "lib/VerticalTiming.asm"
 
 ; ╔══════════════════════════════════════════════════════════════════════════╗
-; ║ FILL_CARTRIDGE                                                           ║
+; ║ FILL_CARTRIDGE startAddress                                              ║
 ; ╠══════════════════════════════════════════════════════════════════════════╣
 ; ║ Fills out the remaining cartridge space and includes Vector table        ║
 ; ╚══════════════════════════════════════════════════════════════════════════╝

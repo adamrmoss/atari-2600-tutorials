@@ -81,8 +81,7 @@
 ; ╔══════════════════════════════════════════════════════════════════════════╗
 ; ║ VERTICAL_SYNC                                                            ║
 ; ╠══════════════════════════════════════════════════════════════════════════╣
-; ║ Inserts the code required for a proper 3 scanline                        ║
-; ║ vertical sync sequence                                                   ║
+; ║ Inserts the code required for a proper 3 scanline vertical sync sequence ║
 ; ╠══════════════════════════════════════════════════════════════════════════╣
 ; ║ OUT: A = 1                                                               ║
 ; ╚══════════════════════════════════════════════════════════════════════════╝
@@ -94,4 +93,3 @@
         lsr                 ; A = VSYNC disable
         sta WSYNC           ; 3rd line vertical sync
         sta VSYNC           ; Stop vertical sync
-    endm

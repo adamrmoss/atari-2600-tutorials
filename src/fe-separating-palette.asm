@@ -15,64 +15,47 @@ INITIAL_STARTING_COLOR = $0a
 ; ║ Program                                                                  ║
 ; ╚══════════════════════════════════════════════════════════════════════════╝
     seg ROM
-
 Start:
-    ; Clear Memory
-    lda #0
-    ldx #$ff
-ClearMemoryLoop:
-    sta 0,x
-    dex
-    bne ClearMemoryLoop
-    sta 0
+    CLEAN_START
 
-    ; Initialize Color
     lda #INITIAL_STARTING_COLOR
     sta ColorPhase
     sta COLUBK
 
-    ; Enable VBLANK
-    lda #$02
-    sta VBLANK
-
 StartFrame:
+    START_VBLANK
+
     ; Increment ColorPhase twice
     inc ColorPhase
     inc ColorPhase
 
-    ; Output VBlank
-    ldx #VBLANK_LINE_COUNT
-VBlankLoop:
-    sta WSYNC
-    dex
-    bne VBlankLoop
-
-    ; Turn off VBLANK
-    lda #$00
-    sta VBLANK
+    FINISH_VBLANK
 
     ldy ColorPhase
 
-    ; Draw Visible Picture
-    ldx #PICTURE_LINE_COUNT
-VisibleLineLoop:
+    ; Draw Top Half of Visible Picture
+    ldx #PICTURE_LINE_COUNT / 2
+TopLineLoop:
+    sty COLUBK
+    sty WSYNC
+    iny
+    iny
+    dex
+    bne TopLineLoop
+
+    ; Draw Bottom Half of Visible Picture
+    ldx #PICTURE_LINE_COUNT / 2
+BottomLineLoop:
     sty COLUBK
     sty WSYNC
     dey
     dey
     dex
-    bne VisibleLineLoop
+    bne BottomLineLoop
+    
+    START_OVERSCAN
 
-    ; Enable VBLANK
-    lda #$02
-    sta VBLANK
-
-    ; Overscan lines
-    ldx #OVERSCAN_LINE_COUNT
-OverscanLoop:
-    sta WSYNC
-    dex
-    bne OverscanLoop
+    FINISH_OVERSCAN
 
     VERTICAL_SYNC
 
