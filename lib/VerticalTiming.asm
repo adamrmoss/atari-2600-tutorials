@@ -2,8 +2,6 @@
 ; ║ VERTICAL_SYNC                                                            ║
 ; ╠══════════════════════════════════════════════════════════════════════════╣
 ; ║ Inserts the code required for a proper 3 scanline vertical sync sequence ║
-; ╠══════════════════════════════════════════════════════════════════════════╣
-; ║ OUT: A = 1                                                               ║
 ; ╚══════════════════════════════════════════════════════════════════════════╝
     mac VERTICAL_SYNC
         ; Enable Vertical Sync
@@ -14,7 +12,7 @@
         sta WSYNC
 
         ; Disable Vertical Sync
-        lsr
+        lda #$00
         sta VSYNC
 
         sta WSYNC
