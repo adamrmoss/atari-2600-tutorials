@@ -1,0 +1,1 @@
+dasm src/$1.asm -f3 -lout/$1.lst -sout/$1.sym -oout/$1.bin
