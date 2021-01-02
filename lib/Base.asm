@@ -8,11 +8,11 @@
     include "lib/Scanlines.asm"
     include "lib/VerticalTiming.asm"
 
-;╔══════════════════════════════════════════════════════════════════════════╗
-;║ FILL_CARTRIDGE                                                           ║
-;╠══════════════════════════════════════════════════════════════════════════╣
-;║ Fills out the remaining cartridge space and includes Vector table        ║
-;╚══════════════════════════════════════════════════════════════════════════╝
+; ╔══════════════════════════════════════════════════════════════════════════╗
+; ║ FILL_CARTRIDGE                                                           ║
+; ╠══════════════════════════════════════════════════════════════════════════╣
+; ║ Fills out the remaining cartridge space and includes Vector table        ║
+; ╚══════════════════════════════════════════════════════════════════════════╝
     mac FILL_CARTRIDGE
 .Start set {1}
         ; Fill remaining cartridge space
